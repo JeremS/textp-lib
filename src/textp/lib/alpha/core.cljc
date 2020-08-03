@@ -5,7 +5,7 @@
        :cljs [cljs.core.specs.alpha :as core-specs])
     [net.cgrand.macrovich :as macro :include-macros true]
     [meander.epsilon :as m :include-macros true])
-  #?(:require-macros [textp.lib.core]))
+  #?(:require-macros [textp.lib.alpha.core]))
 
 
 (defn- conform-or-throw [spec v]
@@ -34,6 +34,7 @@
 
 (s/def ::tag-clj-arg clj-arg?)
 (s/def ::tag-txt-arg text-arg?)
+
 
 ;;----------------------------------------------------------------------------------------------------------------------
 ;; Xml like tags definition helpers
@@ -169,29 +170,3 @@
       `(let [f# (clj-fn->tag-fn ~fn-form)]
          (defn ~@base [& args#]
              (apply f# args#))))))
-
-
-(comment
-  (macroexpand-1 '(def-xml-tag div :div))
-
-  (macroexpand-1 (macroexpand-1 '(def-xml-tag div)))
-
-  (def-xml-tag div :div)
-
-  (s/conform ::tag-fn-args [{:tag :tag-args-clj, :content [:class "toto"]}])
-  (s/conform (s/? ::tag-clj-arg) [{:tag :tag-args-clj, :content [:class "toto"]}])
-
-  (div {:tag :tag-args-clj, :content [:class "toto"]}
-       {:tag :tag-args-txt, :content ["content"]})
-
-  (div {:tag :tag-args-clj, :content [:classes ["toto" "titi"] :width "100px"]}
-       {:tag :tag-args-txt, :content ["content"]})
-
-  (div {:tag :tag-args-clj, :content [:class "toto"]})
-
-  (div {:tag :tag-args-txt, :content ["content"]})
-
-
-  (div {:tag :tag-args-txt, :content ["content"]}
-       {:tag :tag-args-clj, :content [:class "toto"]}))
-
