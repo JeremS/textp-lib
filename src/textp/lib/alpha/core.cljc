@@ -1,4 +1,4 @@
-(ns textp.lib.core
+(ns textp.lib.alpha.core
   (:require
     [clojure.spec.alpha :as s]
     #?(:clj [clojure.core.specs.alpha :as core-specs]
