@@ -8,7 +8,7 @@
   #?(:require-macros [textp.lib.alpha.core]))
 
 
-(defn- conform-or-throw [spec v]
+(defn conform-or-throw [spec v]
   (let [res (s/conform spec v)]
     (when (s/invalid? res)
       (throw (ex-info "Invalid input" (s/explain-data ::html-like-tag-args v))))
