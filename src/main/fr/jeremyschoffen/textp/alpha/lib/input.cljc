@@ -1,4 +1,4 @@
-(ns fr.jeremyschoffen.textp.lib.alpha.input
+(ns fr.jeremyschoffen.textp.alpha.lib.input
   (:require [net.cgrand.macrovich :as macro]))
 
 
