@@ -16,7 +16,7 @@
 
 
 ;;----------------------------------------------------------------------------------------------------------------------
-;; Specs decribing reader data for tags
+;; Specs describing reader data for tags
 ;;----------------------------------------------------------------------------------------------------------------------
 (defn- has-k-v? [m k v]
   (= (get m k) v))
@@ -47,22 +47,37 @@
   (apply hash-map args))
 
 
-(defn make-tag [n args]
+(defn make-xml-tag [name attrs content]
+  {:tag name
+   :attrs attrs
+   :content content})
+
+
+(defn xml-tag-args->tag [n args]
   (let [parsed (conform-or-throw ::html-like-tag-args args)]
-    {:tag n
-     :attrs (or (some-> parsed :attrs :content args->map)
-                {})
-     :content (-> parsed :content :content vec)}))
+    (make-xml-tag n
+                  (or (some-> parsed :attrs :content args->map) {})
+                  (-> parsed :content :content vec))))
+
+
+(s/def ::def-xml-tag-args
+  (s/cat :name symbol?
+         :docstring (s/? string?)
+         :keyword-name (s/? keyword?)))
 
 
 (macro/deftime
   (defmacro def-xml-tag
-    ([n]
-     (let [kw (-> n name keyword)]
-       `(def-xml-tag ~n ~kw)))
-    ([name tag-kw]
-     `(defn ~name [& args#]
-        (make-tag ~tag-kw args#)))))
+    {:arglists '([name docstring? keyword-name?])}
+    [& args]
+    (let [{:keys [name docstring keyword-name]
+           :or {docstring ""
+                keyword-name (keyword name)}} (conform-or-throw ::def-xml-tag-args args)]
+      `(defn ~name
+         ~docstring
+         [& args#]
+         (xml-tag-args->tag ~keyword-name args#)))))
+
 
 ;;----------------------------------------------------------------------------------------------------------------------
 ;; Utilies helping the in the definition of functions to be employed in tag syntax.
