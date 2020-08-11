@@ -1,11 +1,11 @@
-(ns fr.jeremyschoffen.textp.alpha.lib.core
+(ns fr.jeremyschoffen.textp.alpha.lib.tag-utils
   (:require
     [clojure.spec.alpha :as s]
     #?(:clj [clojure.core.specs.alpha :as core-specs]
        :cljs [cljs.core.specs.alpha :as core-specs])
     [net.cgrand.macrovich :as macro :include-macros true]
     [meander.epsilon :as m :include-macros true])
-  #?(:require-macros [fr.jeremyschoffen.textp.alpha.lib.core]))
+  #?(:require-macros [fr.jeremyschoffen.textp.alpha.lib.tag-utils]))
 
 
 (defn conform-or-throw [spec v]
