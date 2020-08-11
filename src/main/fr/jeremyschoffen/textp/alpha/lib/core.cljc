@@ -68,6 +68,39 @@
 
 (macro/deftime
   (defmacro def-xml-tag
+    "Define a function intended to be used in a textp document as a tag. For instance:
+    ```clojure
+    (ns my-ns
+      (:require [fr.jeremyschoffen.textp.alpha.lib.core :refer [def-xml-tag]]))
+
+    (def-xml-tag div \"The div tag\")
+    ```
+
+    can be used in a textp document:
+    ```text
+    ◊(require '[my-ns :refer [div]])◊
+    Some text.
+    ◊div[:class \"blue\"] {some text in the div.}
+    ```
+
+    When eventually read end eval-ed this div function will return something like:
+    ```clojure
+    {:tag :div
+     :attrs {:class \"blue\"}
+     :content [\"some text in the div.\"]}
+    ```
+
+    Args:
+    - `name`: a symbol, name of the function/tag
+    - `docstring`: a string
+    - `keyword-name`: a keyword, the keyword name of the tag in the resulting map.
+      Allows for:
+      ```clojure
+      (def-xml-tag html-meta :meta)
+      ```
+      instead of naming the tag/function `meta` and having to exclude `clojure.core/meta` from the ns in which
+      the tag is defined.
+    "
     {:arglists '([name docstring? keyword-name?])}
     [& args]
     (let [{:keys [name docstring keyword-name]
@@ -99,7 +132,7 @@
 
  allows us to do this in textp documents:
  ```text
- Some text then ◊add-tag[1 2].
+ ◊add-tag[1 2] instead of ◊(add 1 2)◊.
  ```"
   [f]
   (fn [& tag-args]
@@ -157,7 +190,7 @@
 
 (macro/deftime
   (defmacro def-tag-fn
-    "Help defining function that will be used in tag form in a text document.
+    "Define a function that will be used in tag form in a text document.
     Similar to [[textp.lib.core/clj-fn->tag-fn]].
 
     You can define the function:
