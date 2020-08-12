@@ -1,0 +1,14 @@
+◊(require '[fr.jeremyschoffen.textp.alpha.doc.tags :as doc-tags])◊
+
+# Textp-doc
+A standard library to use with Textp. It provides helpers to created tags and the basic elements one may want to use
+to compile textp documents.
+
+## Installation
+◊doc-tags/project-coords
+
+## License
+
+Copyright ◊doc-tags/copyright-char 2020 Jeremy Schoffen
+
+Distributed under the Eclipse Public License 2.0.
