@@ -1,6 +1,8 @@
 (ns fr.jeremyschoffen.textp.alpha.lib.tag-utils-test
-  (:require [clojure.test :refer [deftest testing is are]]
-            [fr.jeremyschoffen.textp.alpha.lib.tag-utils :as lib :include-macros true]))
+  (:require
+    #?(:clj [clojure.test :refer [deftest testing is are]]
+       :cljs [cljs.test :refer-macros [deftest testing is are]])
+    [fr.jeremyschoffen.textp.alpha.lib.tag-utils :as lib :include-macros true]))
 
 
 (lib/def-xml-tag div :div)

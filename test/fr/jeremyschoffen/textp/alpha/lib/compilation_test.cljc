@@ -1,6 +1,8 @@
 (ns fr.jeremyschoffen.textp.alpha.lib.compilation-test
-  (:require [clojure.test :refer [deftest is] :include-macros true]
-            [fr.jeremyschoffen.textp.alpha.lib.compilation :as c :include-macros true]))
+  (:require
+    #?(:clj [clojure.test :refer [deftest testing is are]]
+       :cljs [cljs.test :refer-macros [deftest testing is are]])
+    [fr.jeremyschoffen.textp.alpha.lib.compilation :as c :include-macros true]))
 
 
 (deftest text-compilation-env
