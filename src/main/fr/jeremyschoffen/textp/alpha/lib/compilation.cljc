@@ -19,7 +19,8 @@
 
 (defn emit! [& args]
   (doseq [text args]
-    (append! *compilation-out* text)))
+    (when text
+      (append! *compilation-out* text))))
 
 
 (macro/deftime
